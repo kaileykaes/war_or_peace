@@ -9,6 +9,7 @@ RSpec.describe Deck do
     @deck = Deck.new(@cards)
   end
 
+#Iteration 1
   it 'exists' do
     expect(@deck).to be_a Deck
   end
@@ -31,7 +32,7 @@ RSpec.describe Deck do
   end
 
   it '#remove_card & deck make-up changes' do
-    expect(@deck.remove_card).to return(@card1).to_stdout
+    expect(@deck.remove_card).to output(@card1).to_stdout
     expect(@deck.cards).to eq([@card2, @card3])
     expect(@deck.high_ranking_cards).to eq([@card3])
     expect(@deck.percent_high_ranking).to eq(50.0)
@@ -45,4 +46,5 @@ RSpec.describe Deck do
     expect(@deck.high_ranking_cards).to eq([@card3])
     expect(@deck.percent_high_ranking).to eq(33.33)
   end
+
 end
