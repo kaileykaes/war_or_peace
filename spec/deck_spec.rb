@@ -38,10 +38,10 @@ RSpec.describe Deck do
     expect(@deck.percent_high_ranking).to eq(50.0)
   end
 
-  xit 'adds cards and deck make-up changes' do 
+  it 'adds cards and deck make-up changes' do 
     @deck.remove_card
-    card4 = Card.new(:club, '5', 5)
-    @deck.add_card(card4)
+    @card4 = Card.new(:club, '5', 5)
+    @deck.add_card(@card4)
     expect(@deck.cards).to eq([@card2, @card3, @card4]) 
     expect(@deck.high_ranking_cards).to eq([@card3])
     expect(@deck.percent_high_ranking).to eq(33.33)
