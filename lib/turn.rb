@@ -62,4 +62,9 @@ class Turn
       end
     end
   end
+
+  def award_spoils
+    winner.deck.cards << @spoils_of_war
+    winner.deck.cards.flatten!
+  end
 end
