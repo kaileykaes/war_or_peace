@@ -57,7 +57,7 @@ RSpec.describe Turn do
 
   describe '#winner' do 
     it 'has a winner for :basic turn type' do 
-      expect(@turn.winner).to eq(@player1)
+      expect(@turn.winner).to eq(@player2)
     end
 
     it 'winner for :war turn type' do 
@@ -77,7 +77,41 @@ RSpec.describe Turn do
       @player4 = Player.new('Elise', @deck4)
       @turn3 = Turn.new(@player3, @player4)
       expect(@turn3.type).to eq(:mutually_assured_destruction)
-      expect(@turn3.winner).to output('No Winner').to_stdout
+      expect(@turn3.winner).to eq('No Winner')
+    end
+  end
+
+  describe '#pile_cards' do 
+    it 'piles cards for a :basic turn' do 
+      @turn.pile_cards
+      expect(@turn.type).to eq(:basic)
+      expect(@turn.spoils_of_war).to eq([@card1, @card3])
+    end
+
+    it 'piles cards for a :war turn' do 
+      @deck3 = Deck.new([@card1, @card2, @card5, @card8])
+      @deck4 = Deck.new([@card6, @card4, @card6, @card7])
+      @player3 = Player.new('Cameron', @deck3)
+      @player4 = Player.new('Elise', @deck4)
+      @turn2 = Turn.new(@player3, @player4)
+      expect(@turn2.type).to eq(:war)
+      @turn2.pile_cards
+      expect(@turn2.spoils_of_war).to eq([@card1, @card2, @card5,@card6, @card4, @card6])
+      expect(@player3.deck.cards).to eq([@card8])
+      expect(@player4.deck.cards).to eq([@card7])
+    end
+    
+    xit 'does not pile cards for a :mutually_assured_destruction turn' do
+      @deck3 = Deck.new([@card1, @card3, @card2, @card5])
+      @deck4 = Deck.new([@card6, @card8, @card7, @card4])
+      @player3 = Player.new('Cameron', @deck3)
+      @player4 = Player.new('Elise', @deck4)
+      @turn3 = Turn.new(@player3, @player4)
+      expect(@turn3.type).to eq(:mutually_assured_destruction)
+      @turn3.pile_cards
+      expect(@turn3.spoils_of_war).to eq([])
+      expect(@player3.deck.cards).to eq([@card8])
+      expect(@player4.deck.cards).to eq([@card7])
     end
   end
 end
