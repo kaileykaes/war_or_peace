@@ -101,7 +101,7 @@ RSpec.describe Turn do
       expect(@player4.deck.cards).to eq([@card7])
     end
     
-    xit 'does not pile cards for a :mutually_assured_destruction turn' do
+    it 'does not pile cards for a :mutually_assured_destruction turn' do
       @deck3 = Deck.new([@card1, @card3, @card2, @card5])
       @deck4 = Deck.new([@card6, @card8, @card7, @card4])
       @player3 = Player.new('Cameron', @deck3)
@@ -110,8 +110,8 @@ RSpec.describe Turn do
       expect(@turn3.type).to eq(:mutually_assured_destruction)
       @turn3.pile_cards
       expect(@turn3.spoils_of_war).to eq([])
-      expect(@player3.deck.cards).to eq([@card8])
-      expect(@player4.deck.cards).to eq([@card7])
+      expect(@player3.deck.cards).to eq([@card5])
+      expect(@player4.deck.cards).to eq([@card4])
     end
   end
 end
