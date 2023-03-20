@@ -17,4 +17,8 @@ RSpec.describe Player do
     expect(@player.name).to eq('Clarisa')
     expect(@player.deck).to eq(@deck)
   end
+
+  it 'player can remove card from deck' do 
+    expect(@player.deck.remove_card).to eq(@card1)
+  end
 end
