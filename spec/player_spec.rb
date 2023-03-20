@@ -21,4 +21,14 @@ RSpec.describe Player do
   it 'player can remove card from deck' do 
     expect(@player.deck.remove_card).to eq(@card1)
   end
+
+  it 'lost after cards removed' do
+    expect(@player.has_lost?).to eq(false)
+    @player.deck.remove_card
+    expect(@player.has_lost?).to eq(false)
+    @player.deck.remove_card
+    expect(@player.has_lost?).to eq(false)
+    @player.deck.remove_card
+    expect(@player.has_lost?).to eq(true)
+  end
 end
