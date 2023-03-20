@@ -45,13 +45,39 @@ RSpec.describe Turn do
       expect(@turn2.type).to eq(:war)
     end
 
-    xit 'turn type can be destruction' do 
+    it 'turn type can be destruction' do 
       @deck3 = Deck.new([@card1, @card3, @card2, @card5])
       @deck4 = Deck.new([@card6, @card8, @card7, @card4])
       @player3 = Player.new('Cameron', @deck3)
       @player4 = Player.new('Elise', @deck4)
       @turn3 = Turn.new(@player3, @player4)
       expect(@turn3.type).to eq(:mutually_assured_destruction)
+    end
+  end
+
+  describe '#winner' do 
+    it 'has a winner for :basic turn type' do 
+      expect(@turn.winner).to eq(@player1)
+    end
+
+    it 'winner for :war turn type' do 
+      @deck3 = Deck.new([@card1, @card2, @card5, @card8])
+      @deck4 = Deck.new([@card6, @card4, @card6, @card7])
+      @player3 = Player.new('Cameron', @deck3)
+      @player4 = Player.new('Elise', @deck4)
+      @turn2 = Turn.new(@player3, @player4)
+      expect(@turn2.type).to eq(:war)
+      expect(@turn2.winner).to eq(@player4)
+    end
+
+    it 'winner for :mutually_assured_destruction turn type' do 
+      @deck3 = Deck.new([@card1, @card3, @card2, @card5])
+      @deck4 = Deck.new([@card6, @card8, @card7, @card4])
+      @player3 = Player.new('Cameron', @deck3)
+      @player4 = Player.new('Elise', @deck4)
+      @turn3 = Turn.new(@player3, @player4)
+      expect(@turn3.type).to eq(:mutually_assured_destruction)
+      expect(@turn3.winner).to output('No Winner').to_stdout
     end
   end
 end
