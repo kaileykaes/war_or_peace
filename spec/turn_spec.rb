@@ -115,12 +115,41 @@ RSpec.describe Turn do
     end
   end
 
-  it '#award_spoils' do 
-    @turn.pile_cards
-    @turn.award_spoils
-    expect(@turn.winner).to eq(@player2)
-    expect(@turn.spoils_of_war).to eq([@card1, @card3])
-    expect(@player2.deck.cards).to eq([@card4, @card6, @card7, @card1, @card3])
-    expect(@player1.deck.cards).to eq([@card2, @card5, @card8])
+  describe '#award_spoils' do
+    it 'awards spoils in :basic turn' do 
+      @turn.pile_cards
+      @turn.award_spoils
+
+      expect(@turn.winner).to eq(@player2)
+      expect(@turn.spoils_of_war).to eq([@card1, @card3])
+      expect(@player2.deck.cards).to eq([@card4, @card6, @card7, @card1, @card3])
+      expect(@player1.deck.cards).to eq([@card2, @card5, @card8])
+    end
+
+    it 'awards spoils in :war turn' do 
+      @deck3 = Deck.new([@card1, @card2, @card5, @card8])
+      @deck4 = Deck.new([@card6, @card4, @card6, @card7])
+      @player3 = Player.new('Cameron', @deck3)
+      @player4 = Player.new('Elise', @deck4)
+      @turn2 = Turn.new(@player3, @player4)
+      @turn2.pile_cards
+      @turn2.award_spoils
+      expect(@turn2.spoils_of_war).to eq([@card1, @card2, @card5,@card6, @card4, @card6])
+      expect(@player3.deck.cards).to eq([@card8])
+      expect(@player4.deck.cards).to eq([@card7, @card1, @card2, @card5,@card6, @card4, @card6])
+    end
+
+    it 'awards spoils in :mutually_assured_destruction turn' do 
+      @deck3 = Deck.new([@card1, @card3, @card2, @card5])
+      @deck4 = Deck.new([@card6, @card8, @card7, @card4])
+      @player3 = Player.new('Cameron', @deck3)
+      @player4 = Player.new('Elise', @deck4)
+      @turn3 = Turn.new(@player3, @player4)
+      @turn3.pile_cards
+      @turn3.award_spoils
+      expect(@turn3.spoils_of_war).to eq([])
+      expect(@player3.deck.cards).to eq([@card5])
+      expect(@player4.deck.cards).to eq([@card4])
+    end
   end
 end
