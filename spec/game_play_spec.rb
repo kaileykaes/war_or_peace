@@ -71,7 +71,7 @@ RSpec.describe GamePlay do
     @player1 = Player.new('Margot', @deck)
     @player2 = Player.new('Barney', @deck)
     @turn = Turn.new(@player1, @player2)
-    @game = GamePlay.new(@turn, @deck)
+    @game = GamePlay.new
   end
 
   describe '#initialize' do 
@@ -79,14 +79,17 @@ RSpec.describe GamePlay do
       expect(@game).to be_a GamePlay
     end
 
-    it 'has attributes' do 
-      expect(@game.turn).to eq(@turn)
-      expect(@game.deck).to eq(@deck)
+    it 'starts with empty array of turns' do 
+      expect(@game.turns).to eq([])
     end
 
-    it 'attributes are instances of classes' do 
-      expect(@game.turn).to be_a(Turn)
-      expect(@game.deck).to be_a(Deck)
+    it '#add_turn' do 
+      @game.add_turn(@turn)
+      expect(@game.turns).to eq([@turn])
     end
   end
+
+  # describe '#start' do 
+  #   expect(@game.start).to 
+  # end
 end
