@@ -47,4 +47,19 @@ RSpec.describe Deck do
     expect(@deck.percent_high_ranking).to eq(33.33)
   end
 
+  #helpers
+  it '#shuffle' do 
+    @card4 = Card.new(:club, '5', 5)
+    @deck.add_card(@card4)
+    expect(@deck.shuffle).to include(@card1, @card2, @card3, @card4)
+    expect(@deck.shuffle).not_to eq(@deck)
+  end
+
+  it '#deal' do 
+    @card4 = Card.new(:club, '5', 5)
+    @deck.add_card(@card4)
+    @deck.shuffle
+
+    expect{@deck.deal}.to output{[@deck.cards[0..1]] && [@deck.cards[2..3]]}.to_stdout
+  end
 end
