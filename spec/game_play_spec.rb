@@ -89,7 +89,10 @@ RSpec.describe GamePlay do
     end
   end
 
-  # describe '#start' do 
-  #   expect(@game.start).to 
-  # end
+  describe '#start' do 
+    it 'creates a turn and adds it to turns array' do
+    @game.start(@player1, @player2)
+    expect(@game.turns).to include(Turn)
+    end
+  end
 end
