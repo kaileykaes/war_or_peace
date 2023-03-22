@@ -55,11 +55,23 @@ RSpec.describe Deck do
     expect(@deck.shuffle).not_to eq(@deck)
   end
 
+  it '#half_deck' do 
+    @card4 = Card.new(:club, '5', 5)
+    @deck.add_card(@card4)
+
+    expect(@deck.half_deck1).to eq([])
+    expect(@deck.half_deck2).to eq([])
+    
+    @deck.deal
+    expect(@deck.half_deck1).to eq([@card1, @card2])
+    expect(@deck.half_deck2).to eq([@card3, @card4])
+  end
+
   it '#deal' do 
     @card4 = Card.new(:club, '5', 5)
     @deck.add_card(@card4)
-    @deck.shuffle
-
-    expect{@deck.deal}.to output{[@deck.cards[0..1]] && [@deck.cards[2..3]]}.to_stdout
+    @deck.deal
+    expect(@deck.half_deck1).to eq(@deck.cards[0..1])
+    expect(@deck.half_deck2).to eq(@deck.cards[2..3])
   end
 end
