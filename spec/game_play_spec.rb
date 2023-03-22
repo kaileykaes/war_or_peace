@@ -68,8 +68,8 @@ RSpec.describe GamePlay do
       @card_51, @card_52
     ]
     @deck = Deck.new(@cards)
-    @player1 = Player.new('Margot')
-    @player2 = Player.new('Barney')
+    @player1 = Player.new('Margot', @deck)
+    @player2 = Player.new('Barney', @deck)
     @turn = Turn.new(@player1, @player2)
     @game = GamePlay.new(@turn, @deck)
   end
@@ -77,6 +77,16 @@ RSpec.describe GamePlay do
   describe '#initialize' do 
     it 'exists' do
       expect(@game).to be_a GamePlay
+    end
+
+    it 'has attributes' do 
+      expect(@game.turn).to eq(@turn)
+      expect(@game.deck).to eq(@deck)
+    end
+
+    it 'attributes are instances of classes' do 
+      expect(@game.turn).to be_a(Turn)
+      expect(@game.deck).to be_a(Deck)
     end
   end
 end
