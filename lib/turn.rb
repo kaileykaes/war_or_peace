@@ -33,11 +33,12 @@ class Turn
         @player2
       end
     else
-      'No Winner'
+      'No Winner' 
     end
   end
 
   def pile_cards
+    @spoils_of_war.clear
     if type == :basic
       @spoils_of_war << @player1.deck.cards[0] 
       @spoils_of_war << @player2.deck.cards[0]
@@ -63,8 +64,9 @@ class Turn
     end
   end
 
-  def award_spoils
-    winner.deck.cards << @spoils_of_war
-    winner.deck.cards.flatten!
+  def award_spoils 
+    winner.deck.cards << @spoils_of_war unless winner == 'No Winner'
+    winner.deck.cards.flatten! unless winner == 'No Winner'
+    winner if @spoils_of_war.length == 0
   end
 end

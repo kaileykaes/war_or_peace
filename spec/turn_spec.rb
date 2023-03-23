@@ -150,6 +150,6 @@ RSpec.describe Turn do
       expect(@turn3.spoils_of_war).to eq([])
       expect(@player3.deck.cards).to eq([@card5])
       expect(@player4.deck.cards).to eq([@card4])
-    end
+    end    
   end
 end
