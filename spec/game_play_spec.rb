@@ -95,4 +95,14 @@ RSpec.describe GamePlay do
     expect(@game.turns).to include(Turn)
     end
   end
+
+  describe '#game_won?'
+    it 'returns true if a player has no cards' do 
+      @player1.deck.cards.clear
+      expect(@game.game_won?(@player1, @player2)).to be true
+    end
+
+    it 'returns false if a player has cards' do 
+      expect(@game.game_won?(@player1, @player2)).to be false
+    end
 end
