@@ -1,12 +1,16 @@
 class Deck
-  attr_reader :cards
+  attr_reader :cards, 
+              :half_deck1, 
+              :half_deck2
   
   def initialize(cards)
     @cards = cards
+    @half_deck1 = []
+    @half_deck2 = []
   end
 
   def rank_of_card_at(position)
-    @cards[position].rank
+    @cards[position] != nil ? @cards[position].rank : 0
   end
 
   def high_ranking_cards
@@ -22,10 +26,24 @@ class Deck
   end
 
   def remove_card
-    @cards.delete_at(0)
+    @cards.slice!(0)
   end
 
   def add_card(card)
     @cards << card
+  end
+
+  #helpers
+
+  def shuffle
+    @cards.shuffle!
+  end
+  
+  def deal
+   split = @cards.each_slice(@cards.length/2).to_a
+   @half_deck1 << split.first
+   @half_deck2 << split.last
+   @half_deck1.flatten!
+   @half_deck2.flatten!
   end
 end
