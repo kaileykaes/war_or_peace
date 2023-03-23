@@ -71,7 +71,7 @@ RSpec.describe GamePlay do
     @player1 = Player.new('Margot', @deck)
     @player2 = Player.new('Barney', @deck)
     @turn = Turn.new(@player1, @player2)
-    @game = GamePlay.new
+    @game = GamePlay.new(@player1, @player2)
   end
 
   describe '#initialize' do 
@@ -81,6 +81,8 @@ RSpec.describe GamePlay do
 
     it 'starts with empty array of turns' do 
       expect(@game.turns).to eq([])
+      expect(@game.player1).to eq(@player1)
+      expect(@game.player2).to eq(@player2)
     end
 
     it '#add_turn' do 
@@ -91,7 +93,7 @@ RSpec.describe GamePlay do
 
   describe '#start' do 
     it 'creates a turn and adds it to turns array' do
-    @game.start(@player1, @player2)
+    @game.start
     expect(@game.turns).to include(Turn)
     end
   end
@@ -99,11 +101,11 @@ RSpec.describe GamePlay do
   describe '#game_won?'
     it 'returns true if a player has no cards' do 
       @player1.deck.cards.clear
-      expect(@game.game_won?(@player1, @player2)).to be true
+      expect(@game.game_won?).to be true
     end
 
     it 'returns false if a player has cards' do 
-      expect(@game.game_won?(@player1, @player2)).to be false
+      expect(@game.game_won?).to be false
     end
 
   describe '#win_it_all' do 
@@ -113,9 +115,9 @@ RSpec.describe GamePlay do
       player3 = Player.new('Marco', deck1)
       player4 = Player.new('Justin', deck2)
       turn1 = Turn.new(player3, player4)
-      game1 = GamePlay.new
+      game1 = GamePlay.new(player3, player4)
       player3.deck.cards.clear 
-      expect(game1.win_it_all(player3, @player4)).to eq(@player4)
+      expect(game1.win_it_all).to eq(player4)
     end
     
     it 'knows if someone else won' do 
@@ -124,9 +126,24 @@ RSpec.describe GamePlay do
       player3 = Player.new('Marco', deck1)
       player4 = Player.new('Justin', deck2)
       turn2 = Turn.new(player3, player4)
-      game2 = GamePlay.new
+      game2 = GamePlay.new(player3, player4)
       player4.deck.cards.clear 
-      expect(game2.win_it_all(player3, player4)).to eq(player3)
+      expect(game2.win_it_all).to eq(player3)
+    end
+  end
+
+  describe '#play' do 
+    it 'can return a draw' do 
+      deck1 = Deck.new(@cards[0..4])
+      deck2 = Deck.new(@cards[5..9])
+      player3 = Player.new('Marco', deck1)
+      player4 = Player.new('Justin', deck2)
+      turn2 = Turn.new(player3, player4)
+      game2 = GamePlay.new(player3, player4)
+      1000000.times do 
+        game2.turns << '1'
+      end
+      
     end
   end
 end
