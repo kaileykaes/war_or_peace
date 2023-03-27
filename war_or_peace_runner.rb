@@ -1,11 +1,5 @@
 require './spec/spec_helper'
 
-#helper methods 
-
-def start(player1, player2)
-  Turn.new(player1, player2)
-end
-
 card_1 = Card.new(:club, 'Ace', 14)
 card_2 = Card.new(:club, '2', 2)
 card_3 = Card.new(:club, '3', 3)
